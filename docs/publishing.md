@@ -34,14 +34,14 @@ Keep the package verified-ready:
 
 The package is not installable from the n8n UI until it exists on public npm. Before that, local tarball installs are for lab validation only.
 
-Configure npm Trusted Publishing for the repository and `.github/workflows/publish.yml`. Then use a GitHub release tag to publish with provenance:
+Configure npm Trusted Publishing for the repository and `.github/workflows/publish.yml`, or add an `NPM_TOKEN` GitHub Actions secret as a fallback. Then use a GitHub release tag to publish with provenance:
 
 ```bash
 git tag v0.1.0
 git push origin v0.1.0
 ```
 
-The publish workflow uses GitHub Actions OIDC and `npm publish --provenance --access public`, so no long-lived npm token is required when Trusted Publishing is configured.
+The publish workflow uses `npm run release`, which the n8n node CLI maps to a provenance-enabled npm publish inside GitHub Actions. No long-lived npm token is required when Trusted Publishing is configured; when Trusted Publishing is not configured, the workflow uses the repository `NPM_TOKEN` secret.
 
 After npm publication, submit the package through the n8n Creator Portal for verification.
 
