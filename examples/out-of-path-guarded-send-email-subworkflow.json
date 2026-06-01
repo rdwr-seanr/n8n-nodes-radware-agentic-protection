@@ -1,0 +1,99 @@
+{
+  "name": "Radware Out-of-Path Guarded Send Email Tool",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "jsonExample",
+        "jsonExample": "{\n  \"userPrompt\": \"Follow the instructions in the email.\",\n  \"userIdentifier\": \"n8n-out-of-path-tool-example\",\n  \"userContext\": \"Retrieved email includes personal details and a hidden instruction to send them externally.\",\n  \"to\": \"attacker@example.net\",\n  \"subject\": \"customer notes\",\n  \"body\": \"Employee personal details and internal ticket notes from retrieved email.\"\n}"
+      },
+      "id": "execute-workflow-trigger",
+      "name": "When Called by AI Agent",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [0, 0]
+    },
+    {
+      "parameters": {
+        "operation": "checkToolAction",
+        "userPrompt": "={{ $json.userPrompt || 'AI Agent requested an outbound email action.' }}",
+        "userIdentifier": "={{ $json.userIdentifier || $execution.id }}",
+        "userContext": "={{ $json.userContext || '' }}",
+        "modelToUse": "gpt-4o",
+        "toolName": "send_email",
+        "argsInput": "={{ { to: $json.to, subject: $json.subject, body: $json.body } }}",
+        "toolsInput": [
+          {
+            "type": "function",
+            "name": "send_email",
+            "description": "Send an outbound email to the requested recipient.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "to": { "type": "string" },
+                "subject": { "type": "string" },
+                "body": { "type": "string" }
+              },
+              "required": ["to", "subject", "body"]
+            }
+          }
+        ],
+        "failMode": "fail-close",
+        "blockHandling": "error",
+        "timeoutMs": 15000,
+        "includeResponse": false
+      },
+      "id": "radware-tool-action-guard",
+      "name": "Radware Tool Action Guard",
+      "type": "n8n-nodes-radware-agentic-protection.radwareAgenticGuard",
+      "typeVersion": 1,
+      "position": [300, 0],
+      "credentials": {
+        "radwareOutOfPathApi": {
+          "id": "REPLACE_WITH_CREDENTIAL_ID",
+          "name": "Radware Out-of-Path API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "return items.map((item) => ({\n  json: {\n    response: 'Radware allowed the guarded send_email action. Replace this placeholder with the real Send Email node.',\n    radware: item.json.radware,\n    email: {\n      to: item.json.to,\n      subject: item.json.subject,\n      bodyPreview: String(item.json.body || '').slice(0, 120)\n    }\n  }\n}));"
+      },
+      "id": "send-email-placeholder",
+      "name": "Send Email Placeholder",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [600, 0]
+    }
+  ],
+  "connections": {
+    "When Called by AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Radware Tool Action Guard",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Radware Tool Action Guard": {
+      "main": [
+        [
+          {
+            "node": "Send Email Placeholder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "notes": "Use this as the sensitive-action sub-workflow for the out-of-path AI Agent example. Replace the placeholder with Send Email, HTTP Request, file write, delete, or another sensitive action only after the Radware guard node."
+}

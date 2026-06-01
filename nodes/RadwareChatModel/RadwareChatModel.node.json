@@ -1,0 +1,18 @@
+{
+	"node": "n8n-nodes-radware-agentic-protection.radwareChatModel",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["AI"],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://github.com/rdwr-seanr/n8n-nodes-radware-agentic-protection#credentials"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://github.com/rdwr-seanr/n8n-nodes-radware-agentic-protection/blob/main/docs/in-path.md"
+			}
+		]
+	}
+}

@@ -1,0 +1,75 @@
+{
+  "name": "Radware In-Path AI Agent Example",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "manual-trigger",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [0, 0]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the purpose of Radware Agentic AI Protection for an n8n AI Agent in one sentence.",
+        "options": {
+          "systemMessage": "You are an n8n AI Agent protected through Radware Agentic AI Protection. Keep responses concise."
+        }
+      },
+      "id": "ai-agent",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [320, 0]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o",
+        "options": {
+          "temperature": 0
+        }
+      },
+      "id": "radware-chat-model",
+      "name": "Radware Chat Model",
+      "type": "n8n-nodes-radware-agentic-protection.radwareChatModel",
+      "typeVersion": 1,
+      "position": [320, 220],
+      "credentials": {
+        "radwareInPathApi": {
+          "id": "REPLACE_WITH_CREDENTIAL_ID",
+          "name": "Radware In-Path API"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Radware Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "notes": "In-path pattern: use Radware Chat Model as the AI Agent chat model. Create a Radware In-Path API credential before executing."
+}

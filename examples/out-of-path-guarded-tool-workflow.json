@@ -1,0 +1,235 @@
+{
+  "name": "Radware Out-of-Path AI Agent Example",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "manual-trigger",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [0, 0]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "return [{\n  json: {\n    chatInput: 'Summarize the purpose of Radware Agentic AI Protection for an n8n AI Agent in one sentence.',\n    userId: 'n8n-out-of-path-agent-example',\n    context: {\n      source: 'manual demo',\n      notes: 'Default input is benign. Replace chatInput/context with the real user request and retrieved context.'\n    }\n  }\n}];"
+      },
+      "id": "prepare-agent-input",
+      "name": "Prepare Agent Input",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [240, 0]
+    },
+    {
+      "parameters": {
+        "operation": "checkPrompt",
+        "userPrompt": "={{ $json.chatInput }}",
+        "userIdentifier": "={{ $json.userId }}",
+        "userContext": "={{ JSON.stringify($json.context || {}) }}",
+        "modelToUse": "gpt-4o",
+        "toolsInput": [
+          {
+            "type": "function",
+            "name": "guarded_send_email",
+            "description": "Send an outbound email only after Radware Agentic Guard approves the action.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "to": { "type": "string" },
+                "subject": { "type": "string" },
+                "body": { "type": "string" }
+              },
+              "required": ["to", "subject", "body"]
+            }
+          }
+        ],
+        "failMode": "fail-close",
+        "blockHandling": "error",
+        "timeoutMs": 15000,
+        "includeResponse": false
+      },
+      "id": "radware-prompt-guard",
+      "name": "Radware Prompt Guard",
+      "type": "n8n-nodes-radware-agentic-protection.radwareAgenticGuard",
+      "typeVersion": 1,
+      "position": [520, 0],
+      "credentials": {
+        "radwareOutOfPathApi": {
+          "id": "REPLACE_WITH_CREDENTIAL_ID",
+          "name": "Radware Out-of-Path API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.chatInput }}",
+        "hasOutputParser": false,
+        "needsFallback": false,
+        "options": {
+          "systemMessage": "You are an n8n AI Agent protected by Radware Agentic AI Protection. For outbound email or other external actions, use only the guarded workflow tool so Radware can approve the tool action before execution."
+        }
+      },
+      "id": "ai-agent",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [820, 0]
+    },
+    {
+      "parameters": {
+        "operation": "checkResponse",
+        "userPrompt": "={{ $node[\"Prepare Agent Input\"].json.chatInput }}",
+        "userIdentifier": "={{ $node[\"Prepare Agent Input\"].json.userId }}",
+        "userContext": "={{ JSON.stringify({ inputContext: $node[\"Prepare Agent Input\"].json.context || {}, agentOutput: $json }) }}",
+        "responseText": "={{ $json.output || $json.response || $json.text || JSON.stringify($json) }}",
+        "modelToUse": "gpt-4o",
+        "toolsInput": [
+          {
+            "type": "function",
+            "name": "guarded_send_email",
+            "description": "Send an outbound email only after Radware Agentic Guard approves the action.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "to": { "type": "string" },
+                "subject": { "type": "string" },
+                "body": { "type": "string" }
+              },
+              "required": ["to", "subject", "body"]
+            }
+          }
+        ],
+        "failMode": "fail-close",
+        "blockHandling": "error",
+        "timeoutMs": 15000,
+        "includeResponse": false
+      },
+      "id": "radware-response-guard",
+      "name": "Radware Response Guard",
+      "type": "n8n-nodes-radware-agentic-protection.radwareAgenticGuard",
+      "typeVersion": 1,
+      "position": [1120, 0],
+      "credentials": {
+        "radwareOutOfPathApi": {
+          "id": "REPLACE_WITH_CREDENTIAL_ID",
+          "name": "Radware Out-of-Path API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o"
+        },
+        "responsesApiEnabled": true,
+        "options": {
+          "temperature": 0
+        }
+      },
+      "id": "customer-openai-chat-model",
+      "name": "Customer OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [820, 240],
+      "credentials": {
+        "openAiApi": {
+          "id": "REPLACE_WITH_CREDENTIAL_ID",
+          "name": "OpenAI API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "description": "Use this tool only when the agent needs to send an outbound email. The called workflow must start with Radware Agentic Guard in Check Tool Action mode before the real Send Email node.",
+        "source": "database",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "REPLACE_WITH_GUARDED_TOOL_WORKFLOW_ID"
+        }
+      },
+      "id": "guarded-send-email-tool",
+      "name": "guarded_send_email",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [1120, 240]
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Prepare Agent Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Agent Input": {
+      "main": [
+        [
+          {
+            "node": "Radware Prompt Guard",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Radware Prompt Guard": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Radware Response Guard",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Customer OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "guarded_send_email": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "notes": "Out-of-path pattern: Radware Prompt Guard checks prompt/context before the AI Agent, Radware Response Guard checks the final LLM response before it is returned, and sensitive actions are wrapped as n8n workflow tools whose first executable node is Radware Agentic Guard in Check Tool Action mode."
+}
