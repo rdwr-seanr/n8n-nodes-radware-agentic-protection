@@ -7,7 +7,7 @@
   "author": { "name": "Radware" },
   "repository": {
     "type": "git",
-    "url": "https://github.com/rdwr-seanr/n8n-nodes-radware-agentic-protection.git"
+    "url": "git+https://github.com/rdwr-seanr/n8n-nodes-radware-agentic-protection.git"
   },
   "bugs": {
     "url": "https://github.com/rdwr-seanr/n8n-nodes-radware-agentic-protection/issues"
