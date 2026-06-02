@@ -1,10 +1,14 @@
 {
   "name": "n8n-nodes-radware-agentic-protection",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "n8n community nodes for Radware Agentic AI Protection in-path and out-of-path enforcement",
   "license": "MIT",
   "homepage": "https://github.com/rdwr-seanr/n8n-nodes-radware-agentic-protection#readme",
-  "author": { "name": "Radware" },
+  "author": {
+    "name": "Radware",
+    "email": "seanramati95@gmail.com",
+    "url": "https://www.radware.com/"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rdwr-seanr/n8n-nodes-radware-agentic-protection.git"
