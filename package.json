@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-radware-agentic-protection",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "n8n community nodes for Radware Agentic AI Protection in-path and out-of-path enforcement",
   "license": "MIT",
   "homepage": "https://github.com/rdwr-seanr/n8n-nodes-radware-agentic-protection#readme",
@@ -27,7 +27,13 @@
     "release": "n8n-node release",
     "prepublishOnly": "n8n-node prerelease"
   },
-  "files": ["dist", "docs", "examples", "README.md", "LICENSE"],
+  "files": [
+    "dist",
+    "docs",
+    "examples",
+    "README.md",
+    "LICENSE"
+  ],
   "keywords": [
     "n8n-community-node-package",
     "n8n",
@@ -57,7 +63,10 @@
     "release-it": "^19.0.4",
     "typescript": "5.9.2"
   },
-  "peerDependencies": { "ai-node-sdk": "*", "n8n-workflow": "*" },
+  "peerDependencies": {
+    "ai-node-sdk": "*",
+    "n8n-workflow": "*"
+  },
   "peerDependenciesMeta": {
     "ai-node-sdk": {
       "optional": true

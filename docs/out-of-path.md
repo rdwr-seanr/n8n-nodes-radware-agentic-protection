@@ -90,7 +90,9 @@ The guard sends:
 - `ApiKey`
 - `ModelToUse`
 
-If `Tools Schema` is empty, the node infers a simple OpenAI-compatible function schema from `Tool Arguments`.
+For Behavioral / Agentic Protection, `Tools Schema` should include the relevant tool chain, not only the final action. In an email exfiltration scenario, include both the retrieval tool such as `read_email` and the proposed action tool such as `send_email`, and put the retrieved email content in `User Context`.
+
+If `Tools Schema` is empty, the node infers a simple OpenAI-compatible function schema from `Tool Arguments`. That is useful for basic wiring, but full tool-chain context is recommended for production validation.
 
 ## Fail Modes
 

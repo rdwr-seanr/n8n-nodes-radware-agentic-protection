@@ -9,6 +9,8 @@ import { supplyModel } from '@n8n/ai-node-sdk';
 
 type ModelOptions = {
 	temperature?: number;
+	maxTokens?: number;
+	timeoutMs?: number;
 };
 
 type RadwareInPathCredentials = ICredentialDataDecryptedObject & {
@@ -107,6 +109,22 @@ export class RadwareChatModel implements INodeType {
 							'Controls randomness. Lower values make responses more deterministic.',
 						type: 'number',
 					},
+					{
+						displayName: 'Max Tokens',
+						name: 'maxTokens',
+						type: 'number',
+						default: 1024,
+						typeOptions: { minValue: 1 },
+						description: 'Maximum number of tokens to generate',
+					},
+					{
+						displayName: 'Timeout',
+						name: 'timeoutMs',
+						type: 'number',
+						default: 30000,
+						typeOptions: { minValue: 1000, maxValue: 120000 },
+						description: 'Maximum time in milliseconds to wait for Radware/provider response',
+					},
 				],
 			},
 		],
@@ -114,7 +132,8 @@ export class RadwareChatModel implements INodeType {
 
 	async supplyData(this: ISupplyDataFunctions, itemIndex: number) {
 		const credentials = (await this.getCredentials('radwareInPathApi')) as RadwareInPathCredentials;
-		const model = this.getNodeParameter('model', itemIndex) as string;
+		const modelParameter = this.getNodeParameter('model', itemIndex, 'gpt-4o') as string;
+		const model = modelParameter.trim() || 'gpt-4o';
 		const options = this.getNodeParameter('options', itemIndex, {}) as ModelOptions;
 
 		return supplyModel(this, {
@@ -123,6 +142,9 @@ export class RadwareChatModel implements INodeType {
 			apiKey: credentials.apiKey,
 			model,
 			temperature: options.temperature,
+			maxTokens: options.maxTokens,
+			streaming: false,
+			timeout: options.timeoutMs,
 		});
 	}
 }

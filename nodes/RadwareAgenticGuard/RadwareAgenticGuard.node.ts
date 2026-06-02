@@ -181,9 +181,9 @@ export class RadwareAgenticGuard implements INodeType {
 				displayName: 'Tools Schema',
 				name: 'toolsInput',
 				type: 'json',
-				default: '=[]',
+				default: '={{ $json.toolsInput || $json.tools || [] }}',
 				description:
-					'Optional OpenAI-compatible tool schema list. If empty for a tool action, the node infers a schema from Tool Arguments.',
+					'Optional OpenAI-compatible tool schema list. For Behavioral tool checks, include the relevant tool chain such as read_email plus send_email, not only the final action. If empty for a tool action, the node infers a schema from Tool Arguments.',
 			},
 			{
 				displayName: 'Fail Mode',

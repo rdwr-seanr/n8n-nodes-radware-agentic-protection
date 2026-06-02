@@ -51,6 +51,8 @@ If the model refuses before emitting a tool call, document it as a provider-flow
 
 Use a low-risk outbound tool such as `send_email`.
 
+For out-of-path tool-stage checks, send the full relevant tool chain in `Tools Schema`. In this email scenario, include both `read_email` and `send_email`, and put the retrieved email content in `User Context`.
+
 User prompt:
 
 ```text

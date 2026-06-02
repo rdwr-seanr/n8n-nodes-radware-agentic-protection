@@ -77,6 +77,8 @@ Chat Trigger -> Radware Prompt Guard -> AI Agent -> Radware Response Guard
 
 The guarded tool sub-workflow should start with `Radware Agentic Guard` in `Check Tool Action` mode, then continue to the sensitive action only when Radware allows it. Do not rely on using Radware only as an AI Agent tool; the prompt and response checks must be in the main workflow path so they run on every turn.
 
+For Behavioral / Agentic Protection, include the relevant tool chain in `Tools Schema`. For example, if the agent first reads an email and then proposes `send_email`, configure the tool guard with both `read_email` and `send_email` schemas and include the retrieved email content in `User Context`.
+
 ## Examples
 
 - `examples/in-path-agent-model-example.json`: AI Agent using `Radware Chat Model` as its in-path model.

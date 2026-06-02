@@ -69,6 +69,8 @@ When Called by AI Agent -> Radware Tool Action Guard -> Send Email / HTTP Reques
 
 Do not add Radware only as an AI Agent tool and expect full protection. The model decides whether to call tools. Prompt and response guardrails must be explicit main-path nodes so they run every time.
 
+For tool misuse protection, map the full relevant tool chain into the tool guard. Example: if an agent reads an email and then proposes an outbound email, `Tools Schema` should include both `read_email` and `send_email`, while `User Context` should include the retrieved email content.
+
 ## What Each Check Covers
 
 | Check | Node Operation | Radware Module |

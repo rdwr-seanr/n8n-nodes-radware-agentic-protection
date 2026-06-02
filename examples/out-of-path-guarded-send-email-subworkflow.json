@@ -24,6 +24,18 @@
         "toolsInput": [
           {
             "type": "function",
+            "name": "read_email",
+            "description": "Read an email by ID.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "email_id": { "type": "string" }
+              },
+              "required": ["email_id"]
+            }
+          },
+          {
+            "type": "function",
             "name": "send_email",
             "description": "Send an outbound email to the requested recipient.",
             "parameters": {
