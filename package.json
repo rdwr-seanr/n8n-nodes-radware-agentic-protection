@@ -1,7 +1,7 @@
 {
   "name": "n8n-nodes-radware-agentic-protection",
-  "version": "0.1.2",
-  "description": "n8n community nodes for Radware Agentic AI Protection in-path and out-of-path enforcement",
+  "version": "0.2.0",
+  "description": "n8n community node for Radware Agentic AI Protection in-path enforcement",
   "license": "MIT",
   "homepage": "https://github.com/rdwr-seanr/n8n-nodes-radware-agentic-protection#readme",
   "author": {
@@ -48,12 +48,10 @@
     "aiNodeSdkVersion": 1,
     "strict": true,
     "credentials": [
-      "dist/credentials/RadwareInPathApi.credentials.js",
-      "dist/credentials/RadwareOutOfPathApi.credentials.js"
+      "dist/credentials/RadwareInPathApi.credentials.js"
     ],
     "nodes": [
-      "dist/nodes/RadwareChatModel/RadwareChatModel.node.js",
-      "dist/nodes/RadwareAgenticGuard/RadwareAgenticGuard.node.js"
+      "dist/nodes/RadwareChatModel/RadwareChatModel.node.js"
     ]
   },
   "devDependencies": {

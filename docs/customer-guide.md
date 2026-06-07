@@ -1,6 +1,6 @@
 # Radware Agentic AI Protection for n8n
 
-This guide explains how to protect n8n AI Agent workflows with Radware Agentic AI Protection.
+This guide explains the supported customer deployment for protecting n8n AI Agent workflows with Radware Agentic AI Protection.
 
 Use one package:
 
@@ -8,23 +8,21 @@ Use one package:
 n8n-nodes-radware-agentic-protection
 ```
 
-The package contains two customer-facing nodes:
+The package exposes one customer-facing node:
 
 - `Radware Chat Model` for in-path deployments.
-- `Radware Agentic Guard` for out-of-path deployments.
 
-Create the required homegrown agent and copy the API key from Radware Cloud:
+Create the required in-path homegrown agent and copy the API key from Radware Cloud:
 
 ```text
 https://console.radwarecloud.com/
 ```
 
-## Choose a Deployment Mode
+## Supported Deployment
 
 | Mode | Use When | n8n Model Traffic | Required Radware Node Placement |
 | --- | --- | --- | --- |
-| In-path | You want Radware to proxy the AI Agent model connection | AI Agent sends model traffic to Radware instead of directly to the provider | `Radware Chat Model` connected to the AI Agent as its Chat Model |
-| Out-of-path | You want to keep the customer's existing n8n model node and add explicit checks | AI Agent keeps OpenAI, Gemini, Anthropic, or another model node | `Radware Agentic Guard` before the AI Agent, after the AI Agent, and before sensitive tool actions |
+| In-path | You want Radware to protect the AI Agent's full model path | AI Agent sends model traffic to Radware instead of directly to the provider | `Radware Chat Model` connected to the AI Agent as its Chat Model |
 
 ## In-Path Quickstart
 
@@ -43,46 +41,25 @@ Trigger -> AI Agent
            Radware Chat Model
 ```
 
-## Out-of-Path Quickstart
+## What It Covers
 
-1. In Radware Cloud, create a homegrown agent with out-of-path enforcement.
-2. In n8n, create `Radware Out-of-Path API` credentials.
-3. Add `Radware Agentic Guard` before the AI Agent and set operation to `Check Prompt`.
-4. Keep the customer's existing chat model connected to the AI Agent.
-5. Add `Radware Agentic Guard` after the AI Agent and set operation to `Check Response`.
-6. For sensitive actions, use n8n workflow tools. The called workflow must start with `Radware Agentic Guard` set to `Check Tool Action`.
+| Check | Radware Module |
+| --- | --- |
+| Prompt before LLM | AI Guardrails for prompt, PII, HAPBlocker, and topic policy |
+| Final LLM answer | AI Guardrails for response-side PII, HAPBlocker, topic, and unsafe output controls |
+| Tool/action context in model request | Behavioral / Agentic Protection for unsafe action, exfiltration, and risky tool use |
 
-Expected main canvas:
+For Behavioral / Agentic Protection validation, use a workflow where the AI Agent's model request includes the relevant tools and prior tool output. For example, include both `read_email` and `send_email` tools, then test a retrieved email that tries to force exfiltration through `send_email`.
 
-```text
-Trigger -> Radware Prompt Guard -> AI Agent -> Radware Response Guard
-                                  ^      ^
-                                  |      |
-                          Chat Model     Guarded workflow tool
-```
+## Why Out-of-Path Is Not Exposed
 
-Expected sensitive tool sub-workflow:
+n8n community nodes cannot globally intercept every AI Agent tool or workflow action before execution. An out-of-path guard node would protect only actions a customer manually routes through that node or a guarded sub-workflow. That is useful as an advanced workflow pattern, but it is not a full one-go n8n AI Agent protection deployment.
 
-```text
-When Called by AI Agent -> Radware Tool Action Guard -> Send Email / HTTP Request / file write / delete
-```
-
-Do not add Radware only as an AI Agent tool and expect full protection. The model decides whether to call tools. Prompt and response guardrails must be explicit main-path nodes so they run every time.
-
-For tool misuse protection, map the full relevant tool chain into the tool guard. Example: if an agent reads an email and then proposes an outbound email, `Tools Schema` should include both `read_email` and `send_email`, while `User Context` should include the retrieved email content.
-
-## What Each Check Covers
-
-| Check | Node Operation | Radware Module |
-| --- | --- | --- |
-| Prompt before LLM | `Check Prompt` | AI Guardrails for prompt, PII, HAPBlocker, and topic policy |
-| Final LLM answer | `Check Response` | AI Guardrails for response-side PII, HAPBlocker, topic, and unsafe output controls |
-| Tool/action before execution | `Check Tool Action` | Behavioral / Agentic Protection for unsafe action, exfiltration, and risky tool use |
+Because this package is intended to be public and easy for customers to use, it exposes only the in-path model node.
 
 ## Production Defaults
 
-- Use `fail-close` for production actions that send, write, delete, or call external systems.
-- Use stable `User Identifier` values so Radware portal events can be traced back to a user or workflow.
+- Use only `Radware Chat Model` as the AI Agent's model node on the protected path.
 - Keep Radware keys only in n8n credentials.
-- Keep direct provider credentials only in the customer model node for out-of-path deployments.
-- Replace example placeholders with real credential IDs and tool workflow IDs after importing examples.
+- Configure the upstream provider in Radware Cloud.
+- Validate Behavioral / Agentic Protection with tool context, not with a plain chat prompt.
