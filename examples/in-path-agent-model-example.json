@@ -1,26 +1,29 @@
 {
-  "name": "Radware In-Path AI Agent Example",
+  "name": "Radware In-Path Customer Chat Agent",
   "nodes": [
     {
-      "parameters": {},
-      "id": "manual-trigger",
-      "name": "Manual Trigger",
-      "type": "n8n-nodes-base.manualTrigger",
-      "typeVersion": 1,
+      "parameters": {
+        "options": {
+          "responseMode": "lastNode"
+        }
+      },
+      "id": "chat-trigger",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
       "position": [0, 0]
     },
     {
       "parameters": {
-        "promptType": "define",
-        "text": "Summarize the purpose of Radware Agentic AI Protection for an n8n AI Agent in one sentence.",
+        "promptType": "auto",
         "options": {
-          "systemMessage": "You are an n8n AI Agent protected through Radware Agentic AI Protection. Keep responses concise."
+          "systemMessage": "You are a customer support AI Agent. Answer concisely. Your chat model is Radware Chat Model, so all LLM traffic is routed through Radware Agentic AI Protection."
         }
       },
       "id": "ai-agent",
-      "name": "AI Agent",
+      "name": "Customer Support AI Agent",
       "type": "@n8n/n8n-nodes-langchain.agent",
-      "typeVersion": 1.6,
+      "typeVersion": 3.1,
       "position": [320, 0]
     },
     {
@@ -41,14 +44,24 @@
           "name": "Radware In-Path API"
         }
       }
+    },
+    {
+      "parameters": {
+        "sessionKey": "={{ $json.sessionId || 'radware-demo-session' }}"
+      },
+      "id": "simple-memory",
+      "name": "Simple Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.1,
+      "position": [560, 220]
     }
   ],
   "connections": {
-    "Manual Trigger": {
+    "When chat message received": {
       "main": [
         [
           {
-            "node": "AI Agent",
+            "node": "Customer Support AI Agent",
             "type": "main",
             "index": 0
           }
@@ -59,8 +72,19 @@
       "ai_languageModel": [
         [
           {
-            "node": "AI Agent",
+            "node": "Customer Support AI Agent",
             "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Customer Support AI Agent",
+            "type": "ai_memory",
             "index": 0
           }
         ]
@@ -71,5 +95,5 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "notes": "In-path pattern: use Radware Chat Model as the AI Agent chat model. Create a Radware In-Path API credential before executing."
+  "notes": "In-path customer pattern: the Chat Trigger sends user messages to an AI Agent whose chat model is Radware Chat Model. Create a Radware In-Path API credential before executing."
 }
