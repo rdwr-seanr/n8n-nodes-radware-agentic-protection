@@ -8,13 +8,23 @@ Out-of-path is not exposed as a public node in this package. n8n community nodes
 
 ## Installation
 
-Install this as an n8n community node package:
+### Install in n8n (recommended)
+
+1. In n8n, go to **Settings -> Community Nodes**.
+2. Click **Install**.
+3. Enter the package name: `n8n-nodes-radware-agentic-protection`.
+4. Agree to the community node risk notice.
+5. Click **Install** and wait for n8n to finish installing the package.
+
+### Self-hosted / manual install (alternative)
+
+For self-hosted instances where you manage packages directly:
 
 ```bash
 npm install n8n-nodes-radware-agentic-protection
 ```
 
-For n8n self-hosted instances, install the package from the n8n community-node UI or from the instance package manager.
+Restart the n8n instance after a manual install so it picks up the new node.
 
 ## Credential
 
@@ -23,6 +33,10 @@ Create a Radware homegrown agent with in-path enforcement in Radware Cloud:
 ```text
 https://console.radwarecloud.com/
 ```
+
+> **Getting your Radware API key**
+>
+> Your Radware API key is created in the Radware Cloud portal (`console.radwarecloud.com`) when you add a **Homegrown Agent** with **In-Path Enforcement**. The key starts with `sk-rdwr-` and is displayed only **once**, at creation time. Copy it and store it securely (a secret manager or your n8n credential store) immediately — Radware cannot show it to you again.
 
 Then create `Radware In-Path API` credentials in n8n:
 
@@ -83,4 +97,3 @@ See [docs/validation.md](docs/validation.md).
 - [Customer guide](docs/customer-guide.md)
 - [In-path setup](docs/in-path.md)
 - [Validation guide](docs/validation.md)
-- [Publishing checklist](docs/publishing.md)
