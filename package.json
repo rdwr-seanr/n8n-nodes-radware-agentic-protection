@@ -6,8 +6,7 @@
   "homepage": "https://github.com/rdwr-seanr/n8n-nodes-radware-agentic-protection#readme",
   "author": {
     "name": "Radware",
-    "email": "seanramati95@gmail.com",
-    "url": "https://www.radware.com/"
+    "url": "https://www.radware.com"
   },
   "repository": {
     "type": "git",
