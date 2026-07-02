@@ -1,74 +1,74 @@
-﻿{
-    "name":  "n8n-nodes-radware-agentic-protection",
-    "version":  "0.2.3",
-    "description":  "n8n community node for Radware Agentic AI Protection in-path enforcement",
-    "license":  "MIT",
-    "homepage":  "https://github.com/rdwr-seanr/n8n-nodes-radware-agentic-protection#readme",
-    "author":  {
-                   "name":  "Radware",
-                   "url":  "https://www.radware.com"
-               },
-    "repository":  {
-                       "type":  "git",
-                       "url":  "git+https://github.com/rdwr-seanr/n8n-nodes-radware-agentic-protection.git"
-                   },
-    "bugs":  {
-                 "url":  "https://github.com/rdwr-seanr/n8n-nodes-radware-agentic-protection/issues"
-             },
-    "scripts":  {
-                    "build":  "n8n-node build",
-                    "build:watch":  "tsc --watch",
-                    "dev":  "n8n-node dev",
-                    "lint":  "n8n-node lint",
-                    "lint:fix":  "n8n-node lint --fix",
-                    "test":  "npm run build \u0026\u0026 node --test tests/*.test.mjs",
-                    "scan":  "npx @n8n/scan-community-package n8n-nodes-radware-agentic-protection",
-                    "release":  "n8n-node release",
-                    "prepublishOnly":  "n8n-node prerelease"
-                },
-    "files":  [
-                  "dist/credentials",
-                  "dist/icons",
-                  "dist/nodes",
-                  "docs",
-                  "examples",
-                  "README.md",
-                  "LICENSE"
-              ],
-    "keywords":  [
-                     "n8n-community-node-package",
-                     "n8n",
-                     "radware",
-                     "agentic-ai",
-                     "ai-security",
-                     "guardrails",
-                     "prompt-injection"
-                 ],
-    "n8n":  {
-                "n8nNodesApiVersion":  1,
-                "aiNodeSdkVersion":  1,
-                "strict":  true,
-                "credentials":  [
-                                    "dist/credentials/RadwareInPathApi.credentials.js"
-                                ],
-                "nodes":  [
-                              "dist/nodes/RadwareChatModel/RadwareChatModel.node.js"
-                          ]
-            },
-    "devDependencies":  {
-                            "@n8n/node-cli":  "0.32.1",
-                            "eslint":  "9.29.0",
-                            "prettier":  "3.6.2",
-                            "release-it":  "^19.0.4",
-                            "typescript":  "5.9.2"
-                        },
-    "peerDependencies":  {
-                             "ai-node-sdk":  "*",
-                             "n8n-workflow":  "*"
-                         },
-    "peerDependenciesMeta":  {
-                                 "ai-node-sdk":  {
-                                                     "optional":  true
-                                                 }
-                             }
+{
+  "name": "n8n-nodes-radware-agentic-protection",
+  "version": "0.2.3",
+  "description": "n8n community node for Radware Agentic AI Protection in-path enforcement",
+  "license": "MIT",
+  "homepage": "https://github.com/rdwr-seanr/n8n-nodes-radware-agentic-protection#readme",
+  "author": {
+    "name": "Radware",
+    "url": "https://www.radware.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rdwr-seanr/n8n-nodes-radware-agentic-protection.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rdwr-seanr/n8n-nodes-radware-agentic-protection/issues"
+  },
+  "scripts": {
+    "build": "n8n-node build",
+    "build:watch": "tsc --watch",
+    "dev": "n8n-node dev",
+    "lint": "n8n-node lint",
+    "lint:fix": "n8n-node lint --fix",
+    "test": "npm run build && node --test tests/*.test.mjs",
+    "scan": "npx @n8n/scan-community-package n8n-nodes-radware-agentic-protection",
+    "release": "n8n-node release",
+    "prepublishOnly": "n8n-node prerelease"
+  },
+  "files": [
+    "dist/credentials",
+    "dist/icons",
+    "dist/nodes",
+    "docs",
+    "examples",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "n8n-community-node-package",
+    "n8n",
+    "radware",
+    "agentic-ai",
+    "ai-security",
+    "guardrails",
+    "prompt-injection"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "aiNodeSdkVersion": 1,
+    "strict": true,
+    "credentials": [
+      "dist/credentials/RadwareInPathApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/RadwareChatModel/RadwareChatModel.node.js"
+    ]
+  },
+  "devDependencies": {
+    "@n8n/node-cli": "0.32.1",
+    "eslint": "9.29.0",
+    "prettier": "3.6.2",
+    "release-it": "^19.0.4",
+    "typescript": "5.9.2"
+  },
+  "peerDependencies": {
+    "ai-node-sdk": "*",
+    "n8n-workflow": "*"
+  },
+  "peerDependenciesMeta": {
+    "ai-node-sdk": {
+      "optional": true
+    }
+  }
 }
