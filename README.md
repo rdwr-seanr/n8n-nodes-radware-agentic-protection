@@ -97,4 +97,3 @@ See [docs/validation.md](docs/validation.md).
 - [Customer guide](docs/customer-guide.md)
 - [In-path setup](docs/in-path.md)
 - [Validation guide](docs/validation.md)
-- [Publishing checklist](docs/publishing.md)
