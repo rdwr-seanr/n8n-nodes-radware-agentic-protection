@@ -1,19 +1,19 @@
 {
   "name": "n8n-nodes-radware-agentic-protection",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "n8n community node for Radware Agentic AI Protection in-path enforcement",
   "license": "MIT",
-  "homepage": "https://github.com/rdwr-seanr/n8n-nodes-radware-agentic-protection#readme",
+  "homepage": "https://github.com/Radware/n8n-nodes-radware-agentic-protection#readme",
   "author": {
     "name": "Radware",
     "url": "https://www.radware.com"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rdwr-seanr/n8n-nodes-radware-agentic-protection.git"
+    "url": "git+https://github.com/Radware/n8n-nodes-radware-agentic-protection.git"
   },
   "bugs": {
-    "url": "https://github.com/rdwr-seanr/n8n-nodes-radware-agentic-protection/issues"
+    "url": "https://github.com/Radware/n8n-nodes-radware-agentic-protection/issues"
   },
   "scripts": {
     "build": "n8n-node build",
@@ -70,5 +70,11 @@
     "ai-node-sdk": {
       "optional": true
     }
-  }
+  },
+  "contributors": [
+    {
+      "name": "Sean Ramati",
+      "url": "https://github.com/rdwr-seanr"
+    }
+  ]
 }
