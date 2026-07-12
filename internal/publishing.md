@@ -37,8 +37,8 @@ The package is installable from the n8n UI only after it exists on public npm.
 Configure npm Trusted Publishing for the repository and `.github/workflows/publish.yml`, or add an `NPM_TOKEN` GitHub Actions secret as a fallback. Then use a GitHub release tag to publish with provenance:
 
 ```bash
-git tag v0.3.0
-git push origin v0.3.0
+git tag v0.3.1
+git push origin v0.3.1
 ```
 
 The publish workflow uses `npm run release`, which the n8n node CLI maps to a provenance-enabled npm publish inside GitHub Actions.
@@ -50,7 +50,7 @@ The publish workflow uses `npm run release`, which the n8n node CLI maps to a pr
 3. Configure npm Trusted Publishing for this GitHub repository and the `Publish` GitHub Actions workflow.
 4. Confirm `package.json` metadata points to the final public GitHub repository.
 5. Run local checks from a clean checkout.
-6. Push tag `v0.3.0`.
+6. Push tag `v0.3.1`.
 7. Confirm the GitHub Actions publish job completed and npm shows the package.
 8. In n8n, install the package by name from **Settings -> Community Nodes**.
 

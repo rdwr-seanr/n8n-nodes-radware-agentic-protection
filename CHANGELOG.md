@@ -19,6 +19,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Added the required corporate `author.email` metadata so the n8n community
+  package scanner accepts the scoped package.
 - `package.json` author metadata now uses the Radware corporate identity
   (`{"name": "Radware", "url": "https://www.radware.com"}`) instead of a
   personal email address.

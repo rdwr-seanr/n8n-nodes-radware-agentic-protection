@@ -8,6 +8,7 @@ const readme = await readFile(new URL('../README.md', import.meta.url), 'utf8');
 test('package uses the official Radware npm scope', () => {
 	assert.equal(packageJson.name, '@radware/n8n-nodes-radware-agentic-protection');
 	assert.equal(packageJson.publishConfig?.access, 'public');
+	assert.match(packageJson.author.email, /@radware\.com$/);
 	assert.match(packageJson.repository.url, /github\.com\/Radware\//);
 	assert.match(readme, /@radware\/n8n-nodes-radware-agentic-protection/);
 });
