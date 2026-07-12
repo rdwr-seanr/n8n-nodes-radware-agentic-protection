@@ -1,0 +1,44 @@
+{
+  "name": "Radware Demo Tool - Send Email Placeholder",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "jsonExample",
+        "jsonExample": "{\n  \"to\": \"teammate@example.com\",\n  \"subject\": \"Status\",\n  \"body\": \"The integration smoke test completed.\"\n}"
+      },
+      "id": "send-email-trigger",
+      "name": "When Called by AI Agent",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [0, 0]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "return items.map((item) => ({\n  json: {\n    status: 'simulated_only',\n    message: 'No email was sent. Replace this placeholder with the real Send Email node only after validating Radware blocks risky tool calls.',\n    email: {\n      to: item.json.to,\n      subject: item.json.subject,\n      bodyPreview: String(item.json.body || '').slice(0, 180)\n    }\n  }\n}));"
+      },
+      "id": "simulate-email-send",
+      "name": "Simulate Send Email",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [280, 0]
+    }
+  ],
+  "connections": {
+    "When Called by AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Simulate Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

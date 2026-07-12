@@ -5,12 +5,16 @@ This guide explains the supported customer deployment for protecting n8n AI Agen
 Use one package:
 
 ```text
-n8n-nodes-radware-agentic-protection
+@radware/n8n-nodes-radware-agentic-protection
 ```
 
 The package exposes one customer-facing node:
 
 - `Radware Chat Model` for in-path deployments.
+
+Install it in n8n from **Settings -> Community Nodes** using the full scoped package name above. Customers migrating from `n8n-nodes-radware-agentic-protection` should uninstall the legacy package, install the official Radware package, reopen each protected workflow, and verify the model connection and credential selection.
+
+Official npm package: <https://www.npmjs.com/package/@radware/n8n-nodes-radware-agentic-protection>
 
 Create the required in-path homegrown agent and copy the API key from Radware Cloud:
 

@@ -35,7 +35,7 @@
       },
       "id": "radware-chat-model",
       "name": "Radware Chat Model",
-      "type": "n8n-nodes-radware-agentic-protection.radwareChatModel",
+      "type": "@radware/n8n-nodes-radware-agentic-protection.radwareChatModel",
       "typeVersion": 1,
       "position": [320, 220],
       "credentials": {

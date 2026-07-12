@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Migrated the npm identity to the official Radware organization scope:
+  `@radware/n8n-nodes-radware-agentic-protection`.
+- Updated node identifiers, examples, documentation, npm links, and publishing
+  instructions for the scoped package.
+- Added customer migration guidance for installations using the legacy
+  unscoped package.
+- Set scoped npm releases to public through `publishConfig.access`.
+
 ### Fixed
 
 - `package.json` author metadata now uses the Radware corporate identity

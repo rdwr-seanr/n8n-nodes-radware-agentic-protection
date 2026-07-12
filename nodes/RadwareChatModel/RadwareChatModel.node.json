@@ -1,17 +1,17 @@
 {
-	"node": "n8n-nodes-radware-agentic-protection.radwareChatModel",
+	"node": "@radware/n8n-nodes-radware-agentic-protection.radwareChatModel",
 	"nodeVersion": "1.0",
 	"codexVersion": "1.0",
 	"categories": ["Utility"],
 	"resources": {
 		"credentialDocumentation": [
 			{
-				"url": "https://github.com/rdwr-seanr/n8n-nodes-radware-agentic-protection#credentials"
+				"url": "https://github.com/Radware/n8n-nodes-radware-agentic-protection#credential"
 			}
 		],
 		"primaryDocumentation": [
 			{
-				"url": "https://github.com/rdwr-seanr/n8n-nodes-radware-agentic-protection/blob/main/docs/in-path.md"
+				"url": "https://github.com/Radware/n8n-nodes-radware-agentic-protection/blob/main/docs/in-path.md"
 			}
 		]
 	}

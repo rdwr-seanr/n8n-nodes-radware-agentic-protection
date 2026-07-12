@@ -59,7 +59,7 @@ export class RadwareChatModel implements INodeType {
 			resources: {
 				primaryDocumentation: [
 					{
-						url: 'https://github.com/rdwr-seanr/n8n-nodes-radware-agentic-protection/blob/main/docs/in-path.md',
+						url: 'https://github.com/Radware/n8n-nodes-radware-agentic-protection/blob/main/docs/in-path.md',
 					},
 					{
 						url: 'https://console.radwarecloud.com/',

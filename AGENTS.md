@@ -4,7 +4,7 @@ Canonical guidance for AI agents working in this repo. CLAUDE.md points here.
 
 ## Mission
 
-Customer-facing n8n community node package `n8n-nodes-radware-agentic-protection`: a Radware-protected chat model (`RadwareChatModel`, outputs `AiLanguageModel`) plus credential type `RadwareInPathApi`. **In-path only, deliberately** — n8n community nodes cannot intercept every native AI Agent action, and a partial out-of-path guard would give false confidence. `tests/packageManifest.test.mjs` enforces this scoping; do not add an out-of-path node without an explicit product decision from Sean.
+Customer-facing n8n community node package `@radware/n8n-nodes-radware-agentic-protection`: a Radware-protected chat model (`RadwareChatModel`, outputs `AiLanguageModel`) plus credential type `RadwareInPathApi`. **In-path only, deliberately** — n8n community nodes cannot intercept every native AI Agent action, and a partial out-of-path guard would give false confidence. `tests/packageManifest.test.mjs` enforces this scoping; do not add an out-of-path node without an explicit product decision from Sean.
 
 ## Read first
 

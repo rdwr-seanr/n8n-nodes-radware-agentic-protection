@@ -12,7 +12,7 @@ Out-of-path is not exposed as a public node in this package. n8n community nodes
 
 1. In n8n, go to **Settings -> Community Nodes**.
 2. Click **Install**.
-3. Enter the package name: `n8n-nodes-radware-agentic-protection`.
+3. Enter the package name: `@radware/n8n-nodes-radware-agentic-protection`.
 4. Agree to the community node risk notice.
 5. Click **Install** and wait for n8n to finish installing the package.
 
@@ -21,10 +21,23 @@ Out-of-path is not exposed as a public node in this package. n8n community nodes
 For self-hosted instances where you manage packages directly:
 
 ```bash
-npm install n8n-nodes-radware-agentic-protection
+npm install @radware/n8n-nodes-radware-agentic-protection
 ```
 
 Restart the n8n instance after a manual install so it picks up the new node.
+
+### Migrating from the legacy package
+
+The official Radware package replaces the legacy unscoped package
+`n8n-nodes-radware-agentic-protection`.
+
+1. Export or back up important workflows before changing community packages.
+2. Uninstall the legacy package from **Settings -> Community Nodes**.
+3. Install `@radware/n8n-nodes-radware-agentic-protection`.
+4. Open each protected workflow and confirm `Radware Chat Model` is connected to the AI Agent.
+5. Re-select the existing `Radware In-Path API` credential if n8n asks for it, then run a benign test and a policy-block test.
+
+The Radware API credential itself does not change. The package scope changes the n8n node type identifier, so existing workflows must be checked after migration.
 
 ## Credential
 
@@ -94,6 +107,9 @@ See [docs/validation.md](docs/validation.md).
 
 ## Resources
 
+- [npm package](https://www.npmjs.com/package/@radware/n8n-nodes-radware-agentic-protection)
+- [GitHub repository](https://github.com/Radware/n8n-nodes-radware-agentic-protection)
+- [Radware Cloud portal](https://console.radwarecloud.com/)
 - [Customer guide](docs/customer-guide.md)
 - [In-path setup](docs/in-path.md)
 - [Validation guide](docs/validation.md)

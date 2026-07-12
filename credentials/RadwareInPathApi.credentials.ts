@@ -12,7 +12,7 @@ export class RadwareInPathApi implements ICredentialType {
 
 	displayName = 'Radware In-Path API';
 
-	documentationUrl = 'https://github.com/rdwr-seanr/n8n-nodes-radware-agentic-protection#credentials';
+	documentationUrl = 'https://github.com/Radware/n8n-nodes-radware-agentic-protection#credential';
 
 	icon: Icon = { light: 'file:../icons/radware-mark.svg', dark: 'file:../icons/radware-mark.dark.svg' };
 

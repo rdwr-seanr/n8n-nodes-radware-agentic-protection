@@ -3,7 +3,7 @@
 Package name:
 
 ```text
-n8n-nodes-radware-agentic-protection
+@radware/n8n-nodes-radware-agentic-protection
 ```
 
 ## Local Checks
@@ -16,7 +16,7 @@ npm run build
 npm run lint
 npm test
 npm pack --dry-run
-npx @n8n/scan-community-package n8n-nodes-radware-agentic-protection
+npx @n8n/scan-community-package @radware/n8n-nodes-radware-agentic-protection
 ```
 
 ## n8n Community Requirements
@@ -37,8 +37,8 @@ The package is installable from the n8n UI only after it exists on public npm.
 Configure npm Trusted Publishing for the repository and `.github/workflows/publish.yml`, or add an `NPM_TOKEN` GitHub Actions secret as a fallback. Then use a GitHub release tag to publish with provenance:
 
 ```bash
-git tag v0.2.1
-git push origin v0.2.1
+git tag v0.3.0
+git push origin v0.3.0
 ```
 
 The publish workflow uses `npm run release`, which the n8n node CLI maps to a provenance-enabled npm publish inside GitHub Actions.
@@ -46,13 +46,23 @@ The publish workflow uses `npm run release`, which the n8n node CLI maps to a pr
 ## npm Publication Steps
 
 1. Push this repository to GitHub under the final public repository URL.
-2. In npm, create or confirm access to the package name `n8n-nodes-radware-agentic-protection`.
+2. In npm, confirm access to the Radware organization package name `@radware/n8n-nodes-radware-agentic-protection`.
 3. Configure npm Trusted Publishing for this GitHub repository and the `Publish` GitHub Actions workflow.
 4. Confirm `package.json` metadata points to the final public GitHub repository.
 5. Run local checks from a clean checkout.
-6. Push tag `v0.2.1`.
+6. Push tag `v0.3.0`.
 7. Confirm the GitHub Actions publish job completed and npm shows the package.
 8. In n8n, install the package by name from **Settings -> Community Nodes**.
+
+For the first scoped release, publish with `--access public` (the repository also sets `publishConfig.access` to `public`). After the package exists, configure npm Trusted Publishing for `Radware/n8n-nodes-radware-agentic-protection` and `publish.yml`; use OIDC for subsequent releases instead of a long-lived token.
+
+After the scoped package is confirmed installable, update the n8n Creator Portal submission to:
+
+```text
+https://www.npmjs.com/package/@radware/n8n-nodes-radware-agentic-protection
+```
+
+Changing the npm package identity may trigger another n8n review. Do not deprecate the legacy unscoped package until the scoped package is public, installable, scanned, and reflected in the Creator Portal.
 
 ## n8n Creator Portal Submission
 
@@ -73,7 +83,7 @@ Include:
 
 Show:
 
-1. Install `n8n-nodes-radware-agentic-protection` from npm.
+1. Install `@radware/n8n-nodes-radware-agentic-protection` from npm.
 2. Create or select `Radware In-Path API` credentials and run the credential test.
 3. Create an n8n AI Agent workflow.
 4. Add `Radware Chat Model` from the Language Models list.
@@ -88,7 +98,7 @@ Do not present an out-of-path guard workflow as part of the customer package dem
 After npm publication, customers install one package:
 
 ```text
-n8n-nodes-radware-agentic-protection
+@radware/n8n-nodes-radware-agentic-protection
 ```
 
 They then get:
