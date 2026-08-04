@@ -22,6 +22,14 @@ test('package exposes only the supported in-path n8n surfaces', () => {
 	]);
 });
 
+test('package declares the n8n AI SDK using the supported peer dependency name', () => {
+	assert.deepEqual(packageJson.peerDependencies, {
+		'@n8n/ai-node-sdk': '*',
+		'n8n-workflow': '*',
+	});
+	assert.equal(packageJson.peerDependenciesMeta, undefined);
+});
+
 test('customer README does not advertise an out-of-path node', () => {
 	assert.match(readme, /Radware Chat Model/);
 	assert.doesNotMatch(readme, /Radware Agentic Guard/);
